@@ -9,7 +9,10 @@ import { visiblePosts } from "@/lib/posts";
 const allPosts = visiblePosts(await getCollection("posts"));
 ---
 
-<BaseLayout title="Privacy" description={`Privacy policy for ${siteConfig.name}.`}>
+<BaseLayout
+  title="Privacy"
+  description={`Privacy policy for ${siteConfig.name} — no ads, no cookies set by this site, privacy-first analytics only.`}
+>
   <SiteHeader posts={allPosts} />
   <main id="content" class="outer">
     <div class="canvas">
@@ -17,28 +20,55 @@ const allPosts = visiblePosts(await getCollection("posts"));
         <p class="eyebrow">Privacy</p>
         <h1 class="pagehead-title">Privacy policy</h1>
         <p class="pagehead-description">
-          Starter copy describing what a publication may collect and how it is used. Replace it with
-          your own policy before going live.
+          No ads. No cookies set by this site. Privacy-first analytics only.
         </p>
+        <p class="mt-4 text-sm text-muted-foreground">Last updated: September 22, 2026</p>
       </header>
 
       <div class="prose">
+        <h2>Overview</h2>
+        <p>
+          {siteConfig.name} is a static personal blog. There are no accounts, no ads, and no
+          advertising trackers. This site does not build profiles about you and does not sell
+          personal data.
+        </p>
+
         <h2>What is collected</h2>
         <p>
-          This site is statically generated and sets no cookies of its own. If the newsletter or
-          contact form is connected to a provider, that provider receives the details you submit.
+          This site is hosted on Cloudflare Pages. When you visit a page, Cloudflare processes
+          technical connection data — such as your IP address, user agent, requested URL, and
+          timestamp — to deliver the page securely and reliably.
+        </p>
+        <p>
+          This site itself sets no cookies. Cloudflare may set cookies that are strictly necessary
+          for security and network management (for example, bot protection). How Cloudflare handles
+          data is described in its{" "}
+          <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener noreferrer">
+            privacy policy
+          </a>.
         </p>
 
         <h2>How it is used</h2>
         <p>
-          Submitted details are used only to reply to you or to send the emails you asked for. They
-          are not sold or shared for advertising.
+          This site uses{" "}
+          <a href="https://www.cloudflare.com/web-analytics/" rel="noopener noreferrer">
+            Cloudflare Web Analytics
+          </a>
+          , a privacy-first and cookieless measurement tool. It records aggregate usage — such as
+          page views, referrers, and country-level location — without cookies, without tracking you
+          across sites, and without fingerprinting you by IP address or user agent.
         </p>
 
         <h2>Your reading preference</h2>
         <p>
           The light or dark reading mode you pick is stored in your browser's local storage under
           <code>monograph-theme</code>. It never leaves your device and you can clear it at any time.
+        </p>
+
+        <h2>Search</h2>
+        <p>
+          Search runs entirely in your browser using a static index shipped with the site. Your
+          search query stays on your device and is not sent to any third-party search provider.
         </p>
 
         <h2>Contact</h2>
