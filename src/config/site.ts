@@ -2,7 +2,7 @@ export const siteConfig = {
   /** Wordmark shown in the header and footer. Monograph uses text, never a logo image. */
   name: "Monograph",
   tagline: "Notes on building software",
-  title: "Monograph — Blog of João Nuno Valente",
+  title: "Monograph ⋅ Blog of João Nuno Valente",
   description:
     "Personal programming blog by João Nuno Valente: projects, experiments, notes and lessons learned building software.",
   siteUrl: "https://monograph.joaonunovalente.com",
@@ -16,7 +16,7 @@ export const siteConfig = {
   socialImage: "/og-image.png",
   /** Shown in the home sidebar "About" card. */
   about:
-    "Monograph is a programming journal. It documents what I'm building, how I'm building it, and what I learn along the way.",
+    "Monograph is a programming journal. It documents what I'm building, how I'm building it, and what I learn along the way. It might also contain essays on other topics related to technology that interest me.",
   /**
    * Both forms below ship enabled with an empty `action`, which makes them fully
    * interactive demos that submit nowhere: a small script confirms the submit
@@ -35,7 +35,7 @@ export const siteConfig = {
     enabled: false,
     action: "",
     method: "post",
-    responseTime: "Replies usually go out within two business days.",
+    responseTime: "Replies usually go out within two days.",
   },
   socials: [
     { label: "Website", href: "https://joaonunovalente.com" },
