@@ -11,8 +11,17 @@ const contact = siteConfig.contact;
 const action = contact.action.trim();
 const isEnabled = contact.enabled;
 /* No endpoint configured: keep the form usable and confirm the submit locally
-   rather than posting the page to nowhere. */
-const isDemo = isEnabled && action.length === 0;
+   rather than posting the page to nowhere. With an endpoint configured the
+   form is submitted via fetch so the page never navigates away to FormSubmit. */
+const successMessage = `Thanks — your message was sent. ${contact.responseTime}`.trim();
+const errorMessage = siteConfig.email
+  ? `Something went wrong. Please try again, or write directly to ${siteConfig.email}.`
+  : "Something went wrong. Please try again.";
+/* Official FormSubmit AJAX endpoint: same address with an /ajax/ prefix.
+   It returns JSON ({ success: "true" }) instead of the Thank You page. */
+const ajaxAction = action.includes("/ajax/")
+  ? action
+  : action.replace("formsubmit.co/", "formsubmit.co/ajax/");
 ---
 
 <BaseLayout title="Contact" description={`Get in touch with ${siteConfig.name}.`}>
@@ -38,8 +47,23 @@ const isDemo = isEnabled && action.length === 0;
         class="grid gap-5"
         action={action || undefined}
         method={contact.method}
-        data-contact-form={isDemo ? "" : undefined}
+        data-contact-form={isEnabled ? "" : undefined}
+        data-ajax-url={ajaxAction || undefined}
+        data-demo-message="Thanks. This demo form is not connected to an endpoint yet, so nothing was sent."
+        data-success-message={successMessage}
+        data-error-message={errorMessage}
       >
+        <input type="hidden" name="_subject" value="New contact message from Monograph" />
+        {/* Honeypot for spam bots. Real users never see or fill this. */}
+        <input
+          type="text"
+          name="_honey"
+          tabindex="-1"
+          autocomplete="off"
+          aria-hidden="true"
+          class="hidden"
+        />
+
         <div class="grid gap-2">
           <label class="text-sm font-semibold" for="contact-name">Name</label>
           <input id="contact-name" name="name" type="text" autocomplete="name" required disabled={!isEnabled} class="field" />
@@ -76,17 +100,83 @@ const isDemo = isEnabled && action.length === 0;
   <SiteFooter />
 
   {
-    isDemo && (
+    isEnabled && (
       <script is:inline>
         document.querySelectorAll("[data-contact-form]").forEach((form) => {
-          form.addEventListener("submit", (event) => {
+          let fadeTimer;
+          const fadeStatusLater = (status) => {
+            clearTimeout(fadeTimer);
+            fadeTimer = setTimeout(() => {
+              status.classList.add("is-fading");
+              fadeTimer = setTimeout(() => {
+                status.textContent = "";
+                status.classList.remove("is-fading");
+              }, 400);
+            }, 4000);
+          };
+          form.addEventListener("submit", async (event) => {
             event.preventDefault();
+            if (form.dataset.sending === "true") return;
             const status = form.querySelector("[data-contact-status]");
-            if (status) {
-              status.textContent =
-                "Thanks. This demo form is not connected to an endpoint yet, so nothing was sent.";
+            const submit = form.querySelector('button[type="submit"]');
+            const endpoint = form.getAttribute("action");
+            const originalLabel = submit ? submit.textContent : "";
+            clearTimeout(fadeTimer);
+            if (status) status.classList.remove("is-fading");
+            // Demo form (no endpoint): confirm locally, send nothing.
+            if (!endpoint) {
+              if (status) {
+                status.textContent = form.dataset.demoMessage || "Thanks.";
+                fadeStatusLater(status);
+              }
+              form.reset();
+              return;
             }
-            form.reset();
+            form.dataset.sending = "true";
+            if (submit) {
+              submit.disabled = true;
+              submit.textContent = "Sending…";
+            }
+            if (status) {
+              status.textContent = "Sending…";
+            }
+            try {
+              const ajaxUrl = form.dataset.ajaxUrl || endpoint;
+              const formData = new FormData(form);
+              const payload = Object.fromEntries(formData.entries());
+              const response = await fetch(ajaxUrl, {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Accept: "application/json",
+                },
+                body: JSON.stringify(payload),
+              });
+              let data = null;
+              try {
+                data = await response.json();
+              } catch (parseError) {
+                throw new Error("Submit failed");
+              }
+              // FormSubmit returns { success: "true" } (string) on success,
+              // e.g. { success: "false", message: "...activation..." } otherwise.
+              if (!response.ok || data.success !== "true") throw new Error(data.message || "Submit failed");
+              if (status) {
+                status.textContent = form.dataset.successMessage || "Thanks — your message was sent.";
+                fadeStatusLater(status);
+              }
+              form.reset();
+            } catch (error) {
+              if (status) {
+                status.textContent = form.dataset.errorMessage || "Something went wrong. Please try again.";
+              }
+            } finally {
+              delete form.dataset.sending;
+              if (submit) {
+                submit.disabled = false;
+                if (originalLabel) submit.textContent = originalLabel;
+              }
+            }
           });
         });
       </script>
@@ -96,6 +186,12 @@ const isDemo = isEnabled && action.length === 0;
   <style>
     .contact-status:empty {
       display: none;
+    }
+    .contact-status {
+      transition: opacity 0.4s ease;
+    }
+    .contact-status.is-fading {
+      opacity: 0;
     }
   </style>
 </BaseLayout>

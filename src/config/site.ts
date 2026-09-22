@@ -32,8 +32,8 @@ export const siteConfig = {
     description: "One email when something new goes up. No spam, unsubscribe anytime.",
   },
   contact: {
-    enabled: false,
-    action: "",
+    enabled: true,
+    action: "https://formsubmit.co/hello@joaonunovalente.com",
     method: "post",
     responseTime: "Replies usually go out within two days.",
   },
