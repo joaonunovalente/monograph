@@ -1,6 +1,6 @@
 ---
-title: "Writing Richer Tutorials with MDX Components"
-excerpt: "Monograph renders posts as MDX. Here is what that unlocks for tutorials: callout boxes and tabbed code samples, written like this article."
+title: "Writing a post in Monograph"
+excerpt: "Every element a post can use — headings, callouts, tabbed code samples, syntax highlighting — with the source for each."
 category: "Basics"
 date: 2026-09-22
 author:
@@ -15,7 +15,7 @@ featured: true
 draft: false
 ---
 
-Plain Markdown is fine for prose, but tutorials usually need more: a warning that stands apart from the surrounding paragraph, or install steps that differ by package manager. Posts in `src/content/posts` can now be `.mdx` files, which means a post can drop in components alongside regular Markdown without any extra imports.
+Plain Markdown is fine for prose, but tutorials usually need more: a warning that stands apart from the surrounding paragraph, or install steps that differ by package manager. MDX lets a document mix JSX components into Markdown, so a tutorial can drop a callout or a tabbed code sample straight into the prose without importing anything by hand.
 
 This article is itself an `.mdx` file, and every box below is real output, not a screenshot.
 
@@ -143,9 +143,11 @@ export function greet(name: string) {
 }
 ```
 
-## Where the components live
+## Building your own
 
-Both components are plain `.astro` files in `src/components/mdx`, styled with the same tokens as the rest of the theme, so they pick up light and dark mode automatically. Add more the same way: build the `.astro` component, then make it available to posts through the `components` prop passed to `<Content />` in `src/pages/post/[slug].astro`. 
+Neither component is exotic. A callout is an element with a variant class and a title; a tab group is a container of labelled panels plus a little script that shows one at a time. Neither needs a build step of its own.
+
+The detail worth copying is theming. Drive the colors from tokens instead of fixed values, so a callout picks up light and dark mode the same way the surrounding page does.
 
 
 
