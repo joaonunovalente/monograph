@@ -49,16 +49,21 @@ const socialImage = data.cover
   : new URL(siteConfig.socialImage, siteConfig.siteUrl).toString();
 const encodedUrl = encodeURIComponent(articleUrl);
 const encodedTitle = encodeURIComponent(data.title);
-const shareLinks: { label: string; icon: "twitter-x" | "facebook" | "linkedin"; href: string }[] = [
+const shareLinks: { label: string; icon: "twitter-x" | "whatsapp" | "bluesky" | "linkedin"; href: string }[] = [
   {
     label: "X",
     icon: "twitter-x",
     href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
   },
   {
-    label: "Facebook",
-    icon: "facebook",
-    href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+    label: "Bluesky",
+    icon: "bluesky",
+    href: `https://bsky.app/intent/compose?text=${encodedTitle}%20${encodedUrl}`,
+  },
+  {
+    label: "Whatsapp",
+    icon: "whatsapp",
+    href: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
   },
   {
     label: "LinkedIn",
