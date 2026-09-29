@@ -28,6 +28,13 @@ npm run build
 npm run preview
 ```
 
+## Template
+
+This project is built on [Monograph](https://github.com/xocothemes/monograph), a free,
+MIT-licensed Astro blog theme by [Xoco Themes](https://github.com/xocothemes), with a
+[live theme preview](https://monograph.xocoweb.workers.dev/). This repository is a
+customized version of it.
+
 ## License
 
 MIT — free for personal and commercial projects. See [LICENSE](./LICENSE), which also lists the
