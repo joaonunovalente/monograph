@@ -1,3 +1,6 @@
+/** The blog's author. Declared first so `socials` can reference it below. */
+const authorName = "João Nuno Valente";
+
 export const siteConfig = {
   /** Wordmark shown in the header and footer. Monograph uses text, never a logo image. */
   name: "Monograph",
@@ -6,7 +9,7 @@ export const siteConfig = {
   description:
     "Personal programming blog by João Nuno Valente: projects, experiments, notes and lessons learned building software.",
   siteUrl: "https://monograph.joaonunovalente.com",
-  authorName: "João Nuno Valente",
+  authorName,
   authorDescription:
     "Mechanical engineer by training, software developer by passion. I write about programming, software development, and technology.",
   email: "hello@joaonunovalente.com",
@@ -37,11 +40,33 @@ export const siteConfig = {
     method: "post",
     responseTime: "Replies usually go out within two days.",
   },
+  /**
+   * The author's own presences, shown as social buttons in the footer. These
+   * belong to `authorName`, not to the blog, so each entry carries an explicit
+   * `ariaLabel` — there is no sensible template that covers both platforms
+   * ("... on GitHub") and destinations like a personal website or a bio page.
+   */
   socials: [
-    { label: "Website", href: "https://joaonunovalente.com" },
-    { label: "Bio", href: "https://bio.joaonunovalente.com" },
-    { label: "GitHub", href: "https://github.com/joaonunovalente" },
-    { label: "LinkedIn", href: "https://linkedin.com/in/joaonunovalente" },
+    {
+      label: "Website",
+      href: "https://joaonunovalente.com",
+      ariaLabel: `${authorName}'s website`,
+    },
+    {
+      label: "Bio",
+      href: "https://bio.joaonunovalente.com",
+      ariaLabel: `${authorName}'s bio`,
+    },
+    {
+      label: "GitHub",
+      href: "https://github.com/joaonunovalente",
+      ariaLabel: `${authorName} on GitHub`,
+    },
+    {
+      label: "LinkedIn",
+      href: "https://linkedin.com/in/joaonunovalente",
+      ariaLabel: `${authorName} on LinkedIn`,
+    },
   ],
 };
 
