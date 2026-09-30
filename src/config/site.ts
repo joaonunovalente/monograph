@@ -41,7 +41,6 @@ export const siteConfig = {
     { label: "Website", href: "https://joaonunovalente.com" },
     { label: "GitHub", href: "https://github.com/joaonunovalente" },
     { label: "LinkedIn", href: "https://linkedin.com/in/joaonunovalente" },
-    { label: "RSS", href: "/rss.xml" },
   ],
 };
 
