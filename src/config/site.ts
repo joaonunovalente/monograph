@@ -16,7 +16,7 @@ export const siteConfig = {
   socialImage: "/og-image.png",
   /** Shown in the home sidebar "About" card. */
   about:
-    "Monograph is a programming journal. It documents what I'm building, how I'm building it, and what I learn along the way. It might also contain essays on other topics related to technology that interest me.",
+    "Monograph is a programming journal. It documents what I'm building, how I'm building it, and what I learn along the way.",
   /**
    * Both forms below ship enabled with an empty `action`, which makes them fully
    * interactive demos that submit nowhere: a small script confirms the submit
