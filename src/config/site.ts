@@ -39,6 +39,7 @@ export const siteConfig = {
   },
   socials: [
     { label: "Website", href: "https://joaonunovalente.com" },
+    { label: "Bio", href: "https://bio.joaonunovalente.com" },
     { label: "GitHub", href: "https://github.com/joaonunovalente" },
     { label: "LinkedIn", href: "https://linkedin.com/in/joaonunovalente" },
   ],
